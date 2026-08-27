@@ -1,0 +1,17 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+*.log
+
+# 実データ（納品書PDF）は絶対に公開しない。フォルダの構造だけ残す
+受け取り/*
+納品書/*
+処理済み/*
+エラー/*
+!受け取り/.gitkeep
+!納品書/.gitkeep
+!処理済み/.gitkeep
+!エラー/.gitkeep

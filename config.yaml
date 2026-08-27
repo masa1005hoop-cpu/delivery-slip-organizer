@@ -1,0 +1,23 @@
+# 納品書整理ツール — 設定ファイル
+
+# フォルダパス（プロジェクトフォルダからの相対パス）
+folders:
+  inbox: 受け取り
+  customers: 納品書
+  processed: 処理済み
+  error: エラー
+
+# OCRで探すラベル（納品書のレイアウトに合わせて変更できます）
+labels:
+  delivery_to: 届け先
+  customer: 顧客名
+
+# ファイル名の形式: {date}_{delivery_to}.pdf
+filename:
+  date_format: "%Y.%m.%d"
+  delivery_suffix: 家
+
+# OCR設定
+ocr:
+  language: jpn
+  dpi: 300
