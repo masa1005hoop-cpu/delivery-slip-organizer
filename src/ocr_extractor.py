@@ -12,6 +12,16 @@ DATE_PATTERNS = [
     re.compile(r"(\d{4})[./\-年](\d{1,2})[./\-月](\d{1,2})"),
 ]
 
+# OCRは数字の途中に空白を入れることがある（例: 2026年9月1 1日）。
+# そのままだと日付が「9月1日」で切れてしまうため、数字と数字の間の
+# 空白だけを取り除いてから日付を探す。改行はまたがない（別の欄の可能性があるため）。
+DIGIT_GAP = re.compile(r"(?<=\d)[ \t\u3000]+(?=\d)")
+
+
+def normalize_digit_gaps(text: str) -> str:
+    """数字の間に入ったOCR由来の空白を取り除く"""
+    return DIGIT_GAP.sub("", text)
+
 
 def ocr_pdf_page(pdf_path: Path, language: str = "jpn", dpi: int = 300) -> str:
     """PDFの1ページを画像に変換してOCRテキストを返す"""
@@ -39,6 +49,7 @@ def extract_value_after_label(text: str, label: str) -> str | None:
 
 def parse_date(text: str) -> datetime | None:
     """テキストから日付を探して datetime に変換する"""
+    text = normalize_digit_gaps(text)
     for pattern in DATE_PATTERNS:
         match = pattern.search(text)
         if not match:
